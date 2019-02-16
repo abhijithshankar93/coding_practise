@@ -42,6 +42,19 @@ def _find_min_positive_num(arr, index):
 	return len(arr)-index+1
 
 def find_min_posistive_num(arr):
+	'''
+	Crux of problem: move all -ve to left and then set a[i] to -ve if i is 
+	present in a. 
+	For eg: 
+	if A = [3, 4, -1, 1] first move all -ve num to left and calculate
+	the num of -ve num. (here [-1, 4, 3, 1] and index returned is 1)
+
+	Now set A[abs(i)+index-1] to -ve num if i is present in A.
+	Here we would end up with this array A = [-1, -4, 3, -1]
+
+	Now we can easilly iterate through A (after index) and determining index of
+	A where A[i] > 0. If we do not find any then we send back len-index+1
+	'''
 
 	#shift all -ve numbers to left
 	index_shift = leftshift(arr)
