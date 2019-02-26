@@ -45,6 +45,12 @@ class async_scheduler:
 
 
 	def _monitoring_deamon(self, timeout):
+		'''
+		Process that runs in parallel spawning processes as tasks are being
+		pushed into the queue.
+		It waits for a timeout amount of sec post emptying of the queue before 
+		it kills itself.
+		'''
 		end = None
 		proc = []
 		while True:
@@ -56,7 +62,6 @@ class async_scheduler:
 					proc.append(Process(target=simple_scheduler,
 									args=(func[0],func[1],func[2])))
 					proc[-1].start()
-					#simple_scheduler(func[0],func[1],func[2])
 				if end == None:
 					end = datetime.datetime.now() + datetime.timedelta(
 															seconds = timeout)
