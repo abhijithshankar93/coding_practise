@@ -44,7 +44,18 @@ def _combinations(allowed_steps, n, s, temp_comb, combinations):
 	return
 
 
+def get_number_of_ways(allowed_steps, n):
+	cache = [0]*(n+1)
+	cache[0]=0
+
+	for i in range(n+1):
+		cache[i] += sum(cache[i-x] for x in allowed_steps if i-x > 0)
+		cache[i] += 1 if i in allowed_steps else 0
+
+	return cache[-1]
+
 if __name__ == '__main__':
 	n=10
 	allowed_steps=[3,4,5,2]
 	get_unique_ways(allowed_steps, n)
+	print get_number_of_ways(allowed_steps,n)
