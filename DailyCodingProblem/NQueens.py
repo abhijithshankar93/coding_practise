@@ -26,8 +26,8 @@ def n_queens(size, board=[], solutions=[]):
 	'''
 	Bactracking solution that keeps building the board over each iteration
 
-	In addition to getting the sum. This algorithm also returns the position
-	of the queens also.
+	In addition to getting the total number of combinations. This algorithm 
+	also returns the position of the queens also.
 	'''
 	#when the size of board is equal to the provided size we know we have a
 	#completed solution
