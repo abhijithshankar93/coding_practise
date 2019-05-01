@@ -24,6 +24,8 @@ number of steps required to reach the end is 7, since we would need to go
 through (1, 2) because there is a wall everywhere else on the second row.
 '''
 
+from collections import deque
+
 def shortest_path(board, start, end, memoize={}):
 	'''
 	DP soltuion. This solution keeps moving around in all possible directions.
@@ -64,6 +66,58 @@ def shortest_path(board, start, end, memoize={}):
 
 	memoize[str(start[0])+','+str(start[1])] = min(min_list)
 	return memoize[str(start[0])+','+str(start[1])]
+
+def is_valid(curr_row, curr_col, board):
+	if (curr_row < 0 or curr_row >= len(board[0]) or 
+	   curr_col < 0 or curr_col >= len(board)):
+	   return False
+	return True
+
+def shortest_path_2(board, start, end):
+	'''
+	A better solution. Uses Lee Algorithm(usually used for finding the shortest
+	path in a binary matrix)
+
+	This approach will not look for all solutions. The first solution it
+	finds is generally the shortest.
+	
+	Time Complexity: (m*n)
+	'''
+	row_val = [0, -1, 0, 1]
+	col_val = [-1, 0, 1, 0]
+	
+	if board[start[0]][start[1]] != 'f' or board[end[0]][end[1]] != 'f':
+		return None
+
+	if start == end:
+		return 0
+
+	visited = {}
+
+	q = deque()
+
+	q.append((start,0))
+
+	while len(q) > 0:
+		curr_node = q.popleft()
+
+		if curr_node[0] in visited:
+			continue
+
+		for i in range (0, 4):
+			new_row = curr_node[0][0]+row_val[i]
+			new_col = curr_node[0][1]+col_val[i]
+
+			if (new_row, new_col) == end:
+				return curr_node[1]+1
+
+			if (is_valid(new_row, new_col, board) and 
+			   (new_row, new_col) not in visited and
+			   board[new_row][new_col] == 'f'):
+			   q.append(((new_row, new_col), curr_node[1]+1))
+
+	return None
+
 
 
 
